@@ -1,0 +1,11 @@
+services:
+  oracle-xe:
+    image: gvenzl/oracle-xe:21-slim-faststart
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: Oracle123
+      APP_USER: telco
+      APP_USER_PASSWORD: telco123
+    volumes:
+      - ./TABLE_CREATION_SCRIPTS.sql:/container-entrypoint-initdb.d/01_tables.sql
