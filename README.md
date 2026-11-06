@@ -61,12 +61,12 @@ Every query in [`SOLUTIONS.sql`](SOLUTIONS.sql) is preceded by a comment explain
 | 2.1 | Tariff distribution with percentages | `LEFT JOIN` + `SUM(COUNT(*)) OVER ()` |
 | 3.1 | Earliest customers to sign up | order by signup date, not by ID |
 | 3.2 | Their distribution across cities | same filter, `GROUP BY city` |
-| 4.1 | Customers with a missing monthly record | anti-join |
+| 4.1 | Customers with a missing monthly record | anti-join (`LEFT JOIN … IS NULL`) |
 | 4.2 | Missing records by city | anti-join + `GROUP BY` |
 | 5.1 | Used at least 75% of the data limit | usage ÷ limit, zero-limit tariffs excluded |
-| 5.2 | Exhausted every package limit | data, minute and SMS checks together |
-| 6.1 | Customers with unpaid fees | payment status filter |
-| 6.2 | Payment status by tariff | conditional aggregation |
+| 5.2 | Exhausted every package limit | all three limits reached, zero limits excluded |
+| 6.1 | Customers with unpaid fees | three-table join, with the fee owed |
+| 6.2 | Payment status by tariff | `GROUP BY` + `SUM(COUNT(*)) OVER (PARTITION BY tariff)` |
 
 ## Files
 
